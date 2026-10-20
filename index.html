@@ -1,0 +1,975 @@
+# TheOlympus - Yunan Mitolojisi Etkileşimli Portal
+
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheOlympus - Yunan Mitolojisi Portalı</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                            950: '#451a03',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(254, 252, 243, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass {
+            background: rgba(28, 25, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100 transition-colors duration-300 antialiased font-sans">
+
+
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-amber-200/40 dark:border-amber-900/30 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <span class="text-2xl font-extrabold bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-500 bg-clip-text text-transparent dark:from-amber-400 dark:to-orange-400">
+                    TheOlympus
+                </span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                <a href="#yaratilis" class="font-medium hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Evrenin Yaratılışı</a>
+                <a href="#tanrilar" class="font-medium hover:text-amber-600 dark:hover:text-amber-400 transition-colors">12 Tanrı</a>
+                <a href="#kahramanlar" class="font-medium hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Kahramanlar & Anti-Kahramanlar</a>
+                <a href="#soyagaclari" class="font-medium hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Soy Ağaçları</a>
+            </nav>
+
+            <!-- Actions -->
+
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-xl bg-amber-100/60 dark:bg-stone-800/60 hover:bg-amber-200/50 dark:hover:bg-stone-700 transition-all focus:outline-none" aria-label="Tema Değiştir">
+                    <svg id="theme-toggle-sun" class="w-5 h-5 hidden text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 11-2 0V3a1 1 0 011-1zm4 2.293a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zm4 4.707a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM14 14a1 1 0 010 1.414l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM4.293 14.293a1 1 0 011.414 0l.707.707a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 010-1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm2-4.293a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM10 5a5 5 0 100 10 5 5 0 000-10z"></path>
+                    </svg>
+                    <svg id="theme-toggle-moon" class="w-5 h-5 hidden text-amber-700 dark:text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl bg-amber-100/60 dark:bg-stone-800/60 hover:bg-amber-200/50 dark:hover:bg-stone-700 transition-all focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-amber-200/40 dark:border-amber-900/30 bg-stone-50/95 dark:bg-stone-900/95 backdrop-blur-md">
+            <a href="#yaratilis" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-amber-100/50 dark:hover:bg-stone-800 transition-colors">Evrenin Yaratılışı</a>
+            <a href="#tanrilar" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-amber-100/50 dark:hover:bg-stone-800 transition-colors">12 Tanrı</a>
+            <a href="#kahramanlar" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-amber-100/50 dark:hover:bg-stone-800 transition-colors">Kahramanlar & Anti-Kahramanlar</a>
+            <a href="#soyagaclari" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-amber-100/50 dark:hover:bg-stone-800 transition-colors">Soy Ağaçları</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-12 md:pt-32 md:pb-20 overflow-hidden flex items-center bg-gradient-to-b from-amber-500/10 via-transparent to-transparent">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-amber-400/10 rounded-full filter blur-3xl animate-float"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-amber-100/80 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 border border-amber-300/50 mb-4">
+                ⚡ Olimpos Külliyatı ve Helenistik Efsaneler
+            </span>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-stone-950 dark:text-stone-50">
+                <span class="bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-500 bg-clip-text text-transparent dark:from-amber-400 dark:to-orange-400">
+                    TheOlympus
+
+                </span> Mitoloji Arşivi
+            </h1>
+            <p class="text-md sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto mt-4">
+                Kozmosun ilk anından kahramanların trajik soylarına kadar, antik Yunan inanç sistemini şekillendiren efsaneler havuzu.
+            </p>
+        </div>
+    </section>
+
+    <!-- BÖLÜM 1: Evrenin Yaratılışı -->
+    <section id="yaratilis" class="py-16 md:py-24 border-t border-stone-200 dark:border-stone-900 scroll-mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-2 text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider text-sm">
+                        <span>01 // Kozmogoni & Teogoni</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-stone-950 dark:text-stone-50">
+                        Evrenin Yaratılışı ve Düzenin Doğuşu
+                    </h2>
+
+                    <p class="text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Hesiodos’un Teogoni’sine göre, başlangıçta sadece sonsuz bir boşluk olan <strong>Kaos</strong> vardı. Kaos’tan ilk düzeni simgeleyen ilksel varlıklar doğdu: Arzın somutlaşmış hali olan <strong>Gaia (Yeryüzü)</strong>, yeraltı dünyasının en karanlık derinliği olan Tartaros ve muazzam çekim gücüyle Eros.
+                    </p>
+                    <p class="text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Gaia, tek başına gökyüzünü temsil eden <strong>Uranos</strong>’u doğurdu ve onunla birleşerek devasa güçlere sahip 12 Titan'ı meydana getirdi. Ancak güç kavgaları kaçınılmazdı: Oğlu Kronos, babası Uranos'u tahttan indirdi; yıllar sonra ise Kronos'un oğlu <strong>Zeus</strong>, kardeşleriyle birleşerek Titanlara karşı büyük <em>Titanomahi</em> savaşını başlattı. Olimposluların zaferiyle evren, karmaşadan düzene ve tanrısal hiyerarşiye kavuştu.
+                    </p>
+                </div>
+                <div class="relative group rounded-2xl overflow-hidden shadow-xl aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1755071158506-00fda2beabfa?fm=jpg&q=80&w=1000&auto=format&fit=crop" alt="Kadim Evren Yaratılış Esintisi" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent flex items-end p-6">
+                        <p class="text-amber-300 font-medium text-sm">Altın Işıkta Antik Düzenin ve Mabedin Görkemli Yükselişi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÖLÜM 2: 12 Tanrı Hakkında Bilgiler -->
+    <section id="tanrilar" class="py-16 md:py-24 bg-stone-100/60 dark:bg-stone-900/40 border-t border-stone-200 dark:border-stone-900 scroll-mt-16 transition-colors">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <div class="text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider text-sm">02 // Olimpos Panteonu</div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Olimpos Dağı'nın 12 Büyük Tanrısı</h2>
+                <p class="text-stone-600 dark:text-stone-400">Dünyayı ve ölümlülerin kaderlerini yöneten panteon. Hikayelerin detayları için kartlardaki tuşlara tıklayın.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Zeus -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Zeus</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Göklerin Hakimi</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Tanrıların ve insanların babası, mutlak hükümdar. Şimşekleri ve kozmik adaleti yönetir.</p>
+                    </div>
+                    <button onclick="openMythModal('zeus')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+
+                    </button>
+                </div>
+
+                <!-- Poseidon -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Poseidon</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Denizlerin Efendisi</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Okyanusları, fırtınaları ve depremleri kontrol eden, üç dişli mızrağın sahibi güçlü hükümdar.</p>
+                    </div>
+                    <button onclick="openMythModal('poseidon')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Athena -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Athena</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Bilgelik & Strateji</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Zeus'un kafasından zırhıyla doğan, haklı savaşın, stratejinin ve el sanatlarının bakire tanrıçası.</p>
+                    </div>
+                    <button onclick="openMythModal('athena')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Apollon -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Apollon</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Işık & Kehanet</span>
+                        </div>
+
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Müziğin, hakikatin, şiirin, şifanın ve Delphi merkezli kutsal kehanetlerin altın saçlı tanrısı.</p>
+                    </div>
+                    <button onclick="openMythModal('apollon')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Artemis -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Artemis</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Vahşi Doğa & Ay</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Ok ve yayıyla ormanları koruyan, vahşi hayvanların efendisi olan bakire avcılık tanrıçası.</p>
+                    </div>
+                    <button onclick="openMythModal('artemis')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+
+                </div>
+
+                <!-- Hera -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Hera</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Olimpos Kraliçesi</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Evliliğin, sadakatin ve aile düzeninin koruyucusudur, Olimpos'un baş tanrıçası.</p>
+                    </div>
+                    <button onclick="openMythModal('hera')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Ares -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Ares</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Savaş Fizikselliği</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Savaşın vahşi, acımasız ve fiziksel yıkım gücünü temsil eden tanrı.</p>
+                    </div>
+                    <button onclick="openMythModal('ares')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Afrodit -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Afrodit</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Aşk & Güzellik</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Deniz köpüklerinden doğan, saf güzelliğin ve beşeri aşkın tanrıçası.</p>
+
+                    </div>
+                    <button onclick="openMythModal('afrodit')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Hefastos -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Hefastos</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Demir & Zanaat</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Olimpos'un demirci ustası. Volkanik ateşi ve metal işlemeyi yönetir.</p>
+                    </div>
+                    <button onclick="openMythModal('hefastos')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+
+                <!-- Hermes -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Hermes</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Haberci & Gezgin</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Kanatlı sandaletleriyle tanrıların mesajlarını ileten kurnaz tanrı.</p>
+                    </div>
+                    <button onclick="openMythModal('hermes')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Demeter -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Demeter</h3>
+
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Tarım & Hasat</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Mevsimlerin döngüsünü ve toprağın hasat bereketini kontrol eder.</p>
+                    </div>
+                    <button onclick="openMythModal('demeter')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Efsanesini Oku →
+                    </button>
+                </div>
+
+                <!-- Dionysos -->
+                <div class="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/30 dark:border-stone-800 shadow-sm flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold">Dionysos</h3>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Şarap & Tiyatro</span>
+                        </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">Bağ bozumu, şarap yapımı ve dinsel esrikliğin simgesi neşeli tanrı.</p>
+                    </div>
+                    <button onclick="openMythModal('dionysos')" class="w-full mt-2 py-2 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+
+                        Efsanesini Oku →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÖLÜM 3: Kahramanlar ve Anti-Kahramanlar -->
+    <section id="kahramanlar" class="py-16 md:py-24 border-t border-stone-200 dark:border-stone-900 scroll-mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <div class="text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider text-sm">03 // İnsanlığın İki Yüzü</div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Kahramanlar ve Anti-Kahramanlar (Genişletilmiş Külliyat)</h2>
+                <p class="text-stone-600 dark:text-stone-400">Soyağaçlarında yer alan tüm ana figürler, liderler, savaşçılar ve trajik cezalılar alt kategorilere işlenmiştir.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- EPİK KAHRAMANLAR TARAFINDAN ÖRNEKLER -->
+                <div class="space-y-4 p-6 rounded-2xl bg-amber-500/5 border border-amber-200/40 dark:border-amber-900/20">
+
+                    <h3 class="text-2xl font-bold text-amber-700 dark:text-amber-400 mb-6 flex items-center space-x-2">
+                        <span>🛡️ Epik Kahramanlar & Soy Savaşçıları</span>
+                    </h3>
+                    
+                    <!-- 1. Herakles -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">1. Herakles (Herkül)</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Muazzam gücün ve 12 zorlu görevin simgesi.</p></div>
+                        <button onclick="openMythModal('herakles')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 2. Perseus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">2. Perseus</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Yılan saçlı Medusa'yı zekasıyla alt eden yiğit.</p></div>
+                        <button onclick="openMythModal('perseus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 3. Odysseus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">3. Odysseus</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Truva Atı'nın mucidi ve 10 yıllık deniz gezgini.</p></div>
+                        <button onclick="openMythModal('odysseus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+
+                    <!-- 4. İason -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">4. İason (Jason)</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Argonotlar gemisinin ve Altın Post avının önderi.</p></div>
+                        <button onclick="openMythModal('jason')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 5. Akhilleus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">5. Akhilleus (Aşil)</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Troya Savaşı'nın tek zayıf noktalı yenilmez savaşçısı.</p></div>
+                        <button onclick="openMythModal('akhilleus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 6. Theseus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">6. Theseus</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Labirentteki boğa canavar Minotor'u katleden kral.</p></div>
+                        <button onclick="openMythModal('theseus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 7. Bellerofon -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">7. Bellerofon</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Pegasus ile Kimera canavarını vuran kahraman.</p></div>
+                        <button onclick="openMythModal('bellerofon')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+
+                    </div>
+                    <!-- 8. Atalanta -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">8. Atalanta</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Kalidon avının en hızlı okçu kadın kahramanı.</p></div>
+                        <button onclick="openMythModal('atalanta')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 9. Orfeus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">9. Orfeus</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Liriyle Yeraltı dünyasını ve Hades'i büyüleyen ozan.</p></div>
+                        <button onclick="openMythModal('orfeus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 10. Kadmos -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">10. Kadmos</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Ares'in ejderhasını öldürüp Teb şehrini kuran önder.</p></div>
+                        <button onclick="openMythModal('kadmos')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 11. Agamemnon -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center bg-amber-500/10">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">11. Agamemnon</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Akha ordularının ulu başkomutanı ve Miken Kralı.</p></div>
+
+                        <button onclick="openMythModal('agamemnon')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 12. Menelaos -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">12. Menelaos</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Sparta Kralı, Helen'in eşi ve Agamemnon'un kardeşi.</p></div>
+                        <button onclick="openMythModal('menelaos')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 13. Patroklos -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">13. Patroklos</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Akhilleus'un en yakın yoldaşı, sadık soy savaşçısı.</p></div>
+                        <button onclick="openMythModal('patroklos')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 14. Hektor -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">14. Hektor</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Troya'nın onurlu koruyucusu, destansı kahraman prens.</p></div>
+                        <button onclick="openMythModal('hektor')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 15. Orestes -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+
+                        <div><h4 class="font-bold text-amber-600 dark:text-amber-400">15. Orestes</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Agamemnon'un intikamcı oğlu, hanedan bağlarının son halkası.</p></div>
+                        <button onclick="openMythModal('orestes')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-amber-600 hover:text-white dark:bg-stone-800 dark:hover:bg-amber-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                </div>
+
+                <!-- ANTİ-KAHRAMANLAR VE TRAJİK CEZALILAR -->
+                <div class="space-y-4 p-6 rounded-2xl bg-orange-500/5 border border-orange-200/40 dark:border-orange-900/20">
+                    <h3 class="text-2xl font-bold text-orange-700 dark:text-orange-400 mb-6 flex items-center space-x-2">
+                        <span>⛓️ Anti-Kahramanlar & Trajik Cezalılar</span>
+                    </h3>
+
+                    <!-- 1. Sisyphos -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">1. Sisyphos (Sisifos)</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Kaya parçasını ebediyen tepeye itmeye mahkum kral.</p></div>
+                        <button onclick="openMythModal('sisyphos')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 2. Tantalos -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">2. Tantalos</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Su ve meyvelerin içinde ebedi açlığa mahkum edilen kişi.</p></div>
+
+                        <button onclick="openMythModal('tantalos')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 3. İkarus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">3. İkarus</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Güneşe çok yakın uçtuğu için kanatları eriyen genç.</p></div>
+                        <button onclick="openMythModal('ikarus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 4. Arakne -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">4. Arakne</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Athena'ya meydan okuyup örümceğe dönüştürülen kız.</p></div>
+                        <button onclick="openMythModal('arachne')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 5. Prometheus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">5. Prometheus</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Ateşi insana verdiği için ciğeri her gün yenen Titan.</p></div>
+                        <button onclick="openMythModal('prometheus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 6. Midas -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">6. Kral Midas</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Dokunduğu her şeyi altına çeviren hırslı Frigya kralı.</p></div>
+                        <button onclick="openMythModal('midas')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 7. Niobe -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">7. Niobe</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Evlatlarıyla böbürlendiği için taşlaştırılan yaslı kraliçe.</p></div>
+                        <button onclick="openMythModal('niobe')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 8. Faeton -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">8. Faeton</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Güneş arabasını kaçırıp göğü yakarken vurulan çocuk.</p></div>
+                        <button onclick="openMythModal('phaethon')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 9. Narkissos -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">9. Narkissos</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Kendi yansımasına aşık olup nergise dönüşen bencil genç.</p></div>
+                        <button onclick="openMythModal('narkissos')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 10. Pandora -->
+
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">10. Pandora</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Yasak kutuyu açarak dünyaya kötülükleri salan kadın.</p></div>
+                        <button onclick="openMythModal('pandora')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 11. Oidipus -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center bg-orange-500/10">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">11. Oidipus</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Kader ağlarına düşen, babasını katledip tahta geçen Teb Kralı.</p></div>
+                        <button onclick="openMythModal('oidipus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 12. Paris -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">12. Paris</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Helen'i kaçırarak koca bir medeniyetin yıkımına sebep olan prens.</p></div>
+                        <button onclick="openMythModal('paris')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 13. Atreus & Thyestes -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">13. Atreus ve Thyestes</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Öz yeğenlerini kardeşine ziyafet sofrasında sunan vahşi atalar.</p></div>
+                        <button onclick="openMythModal('atreus_thyestes')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+
+                    <!-- 14. Klytaimnestra & Aigisthos -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">14. Klytaimnestra & Aigisthos</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Agamemnon'u banyoda baltayla katleden intikamcı katiller.</p></div>
+                        <button onclick="openMythModal('clytemnestra_aegisthus')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                    <!-- 15. Eteokles & Polyneikes -->
+                    <div class="bg-white dark:bg-stone-900 p-4 rounded-xl shadow-sm border border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                        <div><h4 class="font-bold text-orange-600 dark:text-orange-400">15. Eteokles ve Polyneikes</h4><p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Taht kavgası için teke tek dövüşerek birbirini vuran kardeşler.</p></div>
+                        <button onclick="openMythModal('eteokles_polyneikes')" class="px-3 py-1.5 text-xs font-semibold bg-stone-100 hover:bg-orange-600 hover:text-white dark:bg-stone-800 dark:hover:bg-orange-500 dark:hover:text-stone-950 rounded-lg transition-all">Oku</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÖLÜM 4: Soy Ağaçları -->
+    <section id="soyagaclari" class="py-16 md:py-24 bg-stone-100/60 dark:bg-stone-900/40 border-t border-stone-200 dark:border-stone-900 scroll-mt-16 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+
+                <div class="text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider text-sm">04 // Kan Bağları & Soy Hatları</div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Destansı Kahramanların Soy Ağaçları</h2>
+                <p class="text-stone-600 dark:text-stone-400">Büyük tragedyaların ve mitlerin temelini oluşturan soy bağları. Detaylar ve lanet hikayeleri için butonları kullanın.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Theseus Soy Ağacı Kartı -->
+                <div class="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-amber-200/40 dark:border-stone-800 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-stone-950 dark:text-stone-50 border-b border-amber-100 pb-2 dark:border-stone-800">Theseus'un Soyu (Atina Hanedanı)</h3>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-6">Atina'nın efsanevi kurucu kahramanı, gücünü hem tanrısal hem de köklü krallık bağlarından alır:</p>
+                        <div class="space-y-2 relative border-l-2 border-amber-400 pl-4 ml-2">
+                            <div class="relative"><span class="font-semibold text-amber-700 dark:text-amber-400">Poseidon / Egeus</span> <span class="text-xs text-stone-400">(Deniz Tanrısı / Atina Kralı)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Birleşimi</div>
+                            <div class="relative"><span class="font-semibold text-amber-700 dark:text-amber-400">Aethra (Etra)</span> <span class="text-xs text-stone-400">(Troezen Prensesi)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Doğum</div>
+                            <div class="relative bg-amber-500/10 inline-block px-3 py-1 rounded-lg font-bold text-amber-800 dark:text-amber-300">THESEUS <span class="text-xs font-normal text-stone-500">(Minotor Canavarını Katleden Atina Kralı)</span></div>
+                        </div>
+                    </div>
+
+                    <button onclick="openMythModal('theseus_soy')" class="w-full mt-6 py-2.5 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Soyun Efsanesini ve Hikayesini Oku →
+                    </button>
+                </div>
+
+                <!-- Akhilleus Soy Ağacı Kartı -->
+                <div class="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-amber-200/40 dark:border-stone-800 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-stone-950 dark:text-stone-50 border-b border-amber-100 pb-2 dark:border-stone-800">Akhilleus'un Soyu (Aiakos Hanedanı)</h3>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-6">Troya Savaşı'nın yenilmez savaşçısı olan Aşil'in soy hattı doğrudan deniz nymphasına dayanır:</p>
+                        <div class="space-y-2 relative border-l-2 border-orange-400 pl-4 ml-2">
+                            <div class="relative"><span class="font-semibold text-orange-700 dark:text-orange-400">Peleus</span> <span class="text-xs text-stone-400">(Phthia Kralı, Aiakos'un oğlu)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Evlilik</div>
+                            <div class="relative"><span class="font-semibold text-orange-700 dark:text-orange-400">Thetis</span> <span class="text-xs text-stone-400">(Ölümsüz Deniz Nymphası / Nereid)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Doğum</div>
+                            <div class="relative bg-orange-500/10 inline-block px-3 py-1 rounded-lg font-bold text-orange-800 dark:text-orange-300">AKHİLLEUS (AŞİL) <span class="text-xs font-normal text-stone-500">(Yenilmez Myrmidon Lideri)</span></div>
+                        </div>
+                    </div>
+                    <button onclick="openMythModal('akhilleus_soy')" class="w-full mt-6 py-2.5 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+
+                        Soyun Efsanesini ve Hikayesini Oku →
+                    </button>
+                </div>
+
+                <!-- Agamemnon Soy Ağacı Kartı -->
+                <div class="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-amber-200/40 dark:border-stone-800 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-stone-950 dark:text-stone-50 border-b border-amber-100 pb-2 dark:border-stone-800">Agamemnon'un Soyu (Atreus Hanedanı)</h3>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-6">Miken uygarlığının ve Akha ordularının ulu liderinin kan donduran lanetli soy çizgisi:</p>
+                        <div class="space-y-2 relative border-l-2 border-red-400 pl-4 ml-2">
+                            <div class="relative"><span class="font-semibold text-red-700 dark:text-red-400">Tantalos / Pelops</span> <span class="text-xs text-stone-400">(Kibirli ve Porselen Omuzlu Atalar)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Hanedan Kavgası</div>
+                            <div class="relative"><span class="font-semibold text-red-700 dark:text-red-400">Atreus</span> <span class="text-xs text-stone-400">(Miken Kralı, Thyestes'in Düşmanı)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Doğum</div>
+                            <div class="relative bg-red-500/10 inline-block px-3 py-1 rounded-lg font-bold text-red-800 dark:text-red-300">AGAMEMNON <span class="text-xs font-normal text-stone-500">(Öz Kızını Kurban Eden Talihsiz Komutan)</span></div>
+                        </div>
+                    </div>
+                    <button onclick="openMythModal('agamemnon_soy')" class="w-full mt-6 py-2.5 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Soyun Lanetini ve Hikayesini Oku →
+
+                    </button>
+                </div>
+
+                <!-- Oidipus Soy Ağacı Kartı -->
+                <div class="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-amber-200/40 dark:border-stone-800 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-stone-950 dark:text-stone-50 border-b border-purple-100 pb-2 dark:border-stone-800">Oidipus'un Soyu (Labdakos Hanedanı)</h3>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm mb-6">Kaderinden kaçmaya çalışırken kehanet ağlarına düşen Teb Kralı Oidipus'un trajik soyu:</p>
+                        <div class="space-y-2 relative border-l-2 border-purple-400 pl-4 ml-2">
+                            <div class="relative"><span class="font-semibold text-purple-700 dark:text-purple-400">Kadmos / Labdakos</span> <span class="text-xs text-stone-400">(Teb Şehri Kurucuları)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Kaçınılmaz Kader</div>
+                            <div class="relative"><span class="font-semibold text-purple-700 dark:text-purple-400">Laios & İokaste</span> <span class="text-xs text-stone-400">(Teb Kral ve Kraliçesi)</span></div>
+                            <div class="text-xs text-stone-400 py-1">⬇️ Doğum</div>
+                            <div class="relative bg-purple-500/10 inline-block px-3 py-1 rounded-lg font-bold text-purple-800 dark:text-purple-300">OİDİPUS <span class="text-xs font-normal text-stone-500">(Babasını Katledip Annesiyle Evlenen Kral)</span></div>
+                        </div>
+                    </div>
+                    <button onclick="openMythModal('oidipus_soy')" class="w-full mt-6 py-2.5 text-xs font-bold text-center rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-stone-950 transition-all">
+                        Soyun Trajedisini ve Hikayesini Oku →
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE DETAIL MODAL SYSTEM -->
+    <div id="myth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-md hidden transition-opacity duration-300 opacity-0">
+        <div class="w-full max-w-2xl bg-white dark:bg-stone-900 rounded-3xl shadow-2xl border border-amber-300/40 dark:border-stone-800 max-h-[85vh] flex flex-col transform scale-95 transition-transform duration-300">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-stone-200 dark:border-stone-800 flex justify-between items-center bg-gradient-to-r from-amber-50/10 to-transparent">
+                <div>
+                    <h3 id="modal-title" class="text-2xl font-black text-stone-950 dark:text-stone-50">Mitoloji Başlığı</h3>
+                    <p id="modal-subtitle" class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mt-0.5">Kategori Bilgisi</p>
+                </div>
+                <button id="close-myth-modal" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <!-- Modal Body -->
+
+            <div class="p-6 overflow-y-auto space-y-4 text-stone-700 dark:text-stone-300 leading-relaxed text-sm" id="modal-body-content"></div>
+            <!-- Modal Footer -->
+            <div class="p-4 bg-stone-50 dark:bg-stone-950 border-t border-stone-200 dark:border-stone-800 text-center rounded-b-3xl">
+                <button id="close-myth-modal-btn" class="px-6 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold shadow-md transition-all">Yazıtı Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-stone-200 dark:border-stone-800 py-8 text-center text-sm text-stone-500 dark:text-stone-400 bg-stone-50 dark:bg-stone-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p>&copy; 2026 TheOlympus Bilgi Portalı. Yunan Mitolojisi Özel Arşivi. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Core Scripts with Extended Myth Database -->
+    <script>
+        const mythData = {
+            // --- 12 TANRI ---
+
+            zeus: {
+                title: "Zeus // Göklerin Mutlak Hakimi",
+                sub: "Olimpos Panteonu Baş Tanrısı",
+                story: "Titan Kronos ile Rheia'nın en küçük oğluydu. Kardeşleriyle birleşerek Titanlara karşı 10 yıl süren kanlı Titanomahi Savaşı'nı başlattı. Olimposluların zaferiyle evren göklerin ve mutlak egemenliğin sahibi oldu."
+            },
+            poseidon: {
+                title: "Poseidon // Okyanusların ve Sarsıntıların Efendisi",
+                sub: "Olimpos Panteonu",
+                story: "Denizlerin, fırtınaların ve depremlerin güçlü tanrısıdır. Kikloplar tarafından kendisine hediye edilen üç dişli mızrağı (Trident) ile suları yarar fırtınalar koparır."
+            },
+            athena: {
+                title: "Athena // Stratejik Savaşın ve Bilgeliğin Bakiresi",
+                sub: "Olimpos Panteonu",
+                story: "Demirci tanrı Hefastos balta ile Zeus'un kafasını yarınca, Athena tam zırh kuşanmış, elinde kalkanı ve mızrağıyla haykırarak babasının başından doğdu. Adil stratejiyleri temsil eder."
+            },
+            apollon: {
+                title: "Apollon // Güneşin, Sanatın ve Kehanetin Altın Tanrısı",
+                sub: "Olimpos Panteonu",
+                story: "Müziğin, hakikatin, ışığın, şifanın ve kehanetlerin altın saçlı tanrısı. Dev yılan Python'u altın oklarıyla katlederek Delphi Kehanet Merkezi'ni kurdu."
+
+            },
+            artemis: {
+                title: "Artemis // Avcılık ve Yaban Hayatın Saf Tanrıçası",
+                sub: "Olimpos Panteonu",
+                story: "Vahşi doğanın, ormanların, avcılığın, doğumların ve Ay'ın tanrıçasıdır. Babası Zeus'tan ebedi bekaret ve özgürce ormanlarda koşabilme yetisi diledi."
+            },
+            hera: {
+                title: "Hera // Olimpos'un Evlilik ve Sadakat Kraliçesi",
+                sub: "Olimpos Panteonu",
+                story: "Olimpos Dağı'nın mutlak kraliçesidir. Evliliklerin, aile birliğinin ve kadınların koruyucusudur. Mağrur ve kıskanç yapısıyla bilinir."
+            },
+            ares: {
+                title: "Ares // Katliamın ve Kanlı Savaşın Tanrısı",
+                sub: "Olimpos Panteonu",
+                story: "Savaşın mantığıyla değil, vahşeti, kan dökmeyi ve yağması ile ilgilenir. Korku (Phobos) ve dehşet (Deimos) saçan oğullarıyla savaş alanına iner."
+            },
+            afrodit: {
+                title: "Afrodit // Deniz Köpüklerinden Doğan Muazzam Aşk",
+                sub: "Olimpos Panteonu",
+
+                story: "Uranos'un organı denize fırlatıldığında süzülen deniz köpüklerinden doğdu. Güzelliğin, tutkunun veamp; beşeri aşkın mutlak kraliçesidir."
+            },
+            hefastos: {
+                title: "Hefastos // Volkanların Sakat ve Dahi Demircisi",
+                sub: "Olimpos Panteonu",
+                story: "Volkanların altındaki devasa atölyesinde Zeus'un şimşeklerini, Akhilleus'un delinmez zırhını, Hermes'in kanatlı başlığını o tasarladı."
+            },
+            hermes: {
+                title: "Hermes // Kanatlı Sandaletlerin ve Kurnazlığın Tanrısı",
+                sub: "Olimpos Panteonu",
+                story: "Hızı ve kurnazlığı sebebiyle Zeus'un baş habercisi oldu. Kanatlı sandaletleri ve asası (Caduceus) ile diyarlar arası seyahat eder, ruhları yeraltına taşır."
+            },
+            demeter: {
+                title: "Demeter // Toprağın Hasat Veren Ulu Anası",
+                sub: "Olimpos Panteonu",
+                story: "Tarımın, bereketin, tahılların ve mevsimlerin tanrıçasıdır. Kızı Persephone yeraltına kaçırıldığında yasa bürünerek kış mevsimini yaratmıştır."
+            },
+            dionysos: {
+                title: "Dionysos // Esrikliğin, Şarabın ve Tiyatronun Tanrısı",
+
+                sub: "Olimpos Panteonu",
+                story: "Zeus'un baldırından doğan şarap, bağ bozumu, tiyatro ve coşkunluk tanrısı. İnsanlara medeniyetin dertlerinden sıyrılmayı öğreten son panteon üyesidir."
+            },
+
+            // --- KAHRAMANLAR ---
+            herakles: {
+                title: "Herakles // On İki Görevin Yenilmez Yarı Tanrısı",
+                sub: "Epik Kahramanlar",
+                story: "Zeus'un oğludur. Hera'nın lanetiyle girdiği cinnet sonrası meşhur Herakles'in 12 Görevi'ni (Nemea Aslanı, Hidra avı, Kerberos'un kaçırılışı vb.) üstün kas gücüyle tamamlamış ve Olimpos'a kabul edilmiştir."
+            },
+            perseus: {
+                title: "Perseus // Medusa Canavarının Avcısı",
+                sub: "Epik Kahramanlar",
+                story: "Bakışıyla insanları taşa çeviren yılan saçlı canavar Medusa'yı, Hermes'in kanatlı sandaletleri ve Athena'nın aynalı kalkanı yardımıyla kafasını keserek öldüren zeki kahraman."
+            },
+            odysseus: {
+                title: "Odysseus // İthaka Kralının Akıl Dolu Eve Dönüşü",
+                sub: "Epik Kahramanlar",
+                story: "Truva Atı fikriyle savaşı bitirmiş, ardından evine dönmek için canavarlarla (Sirenler, Kiklop Polifemos, Kirke) dolu 10 yıllık epik bir deniz yolculuğu (Odysseia) yapmıştır."
+
+            },
+            jason: {
+                title: "İason // Argonotlar Takımın ve Altın Postun Önderi",
+                sub: "Epik Kahramanlar",
+                story: "Dünyanın ilk büyük kahramanlar takımı olan 'Argonotlar'ı bir araya getirerek efsanevi Argo gemisiyle tehlikeli denizleri aşmış ve ejderhanın koruduğu Altın Post'u çalmıştır."
+            },
+            akhilleus: {
+                title: "Akhilleus // Troya Savaşının Yenilmez Savaşçısı",
+                sub: "Epik Kahramanlar",
+                story: "Annesi Thetis tarafından kutsal Styx Nehri'ne batırılmış, ancak topuğundan tutulduğu için o nokta onun tek zayıf noktası (Aşil Tendonu) olmuştur. Hektor'u katletmiş, Paris'in okuyla düşmüştür."
+            },
+            theseus: {
+                title: "Theseus // Atina Kurucusu ve Minotor Fatihi",
+                sub: "Epik Kahramanlar",
+                story: "Girit Adası'ndaki ünlü labirente kurban kılığında sızmış, kendisine aşık olan Ariadne'nin yumağı yardımıyla yolu bulup yarı insan yarı boğa olan canavar Minotor'u çıplak elleriyle boğmuştur."
+            },
+            bellerofon: {
+                title: "Bellerofon // Kanatlı At Pegasusun Süvarisi",
+                sub: "Epik Kahramanlar",
+
+                story: "Kanatlı at Pegasus'u evcilleştirip ağzından alevler saçan Kimera canavarını havadan mızrağıyla öldürmüştür. Ancak kibri yüzünden Olimpos'a tırmanmaya çalışınca atından düşüp sakat kalmıştır."
+            },
+            atalanta: {
+                title: "Atalanta // Vahşi Ormanların En Hızlı Okçu Kadını",
+                sub: "Epik Kahramanlar",
+                story: "Artemis'in gazap domuzu avında ilk oku saplayan kadındır. Evlilik koşu yarışında kendisini geçemeyenleri öldürmüş, Hippomenes'in Afrodit'ten aldığı 3 altın elma tuzağıyla yarışta geride kalmıştır."
+            },
+            orfeus: {
+                title: "Orfeus // Liriyle Ölüleri Ağlatan Ozan",
+                sub: "Epik Kahramanlar",
+                story: "Eşi Eurydice'i geri almak için canlı olarak Yeraltı Dünyası'na inmiş, müziğiyle Hades'i büyülemiştir. Ancak tam çıkışta arkasına bakmama kuralını ihlal ettiği için eşini ebediyen kaybetmiştir."
+            },
+            kadmos: {
+                title: "Kadmos // Ejderha Dişlerini Sayan Teb Kurucusu",
+                sub: "Epik Kahramanlar",
+                story: "Ares'in kutsal dev ejderhasını öldürüp dişlerini toprağa ekmiş; dişlerden biter silahlı askerlerin (Spartoi) yardımıyla meşhur yedi kapılı Teb (Thebes) şehrini kurmuştur."
+            },
+            agamemnon: {
+                title: "Agamemnon // Akha Ordularının Ulu Başkomutanı",
+
+                sub: "Epik Kahramanlar / Atreus Hanedanı",
+                story: "Miken Kralı ve ulu komutan. Troya Savaşı'na yelken açabilmek için öz kızı Iphigenia'yı Artemis'e kurban etmiş, savaşı kazanıp Cassandra ile sarayına döndüğünde karısı Klytaimnestra ve sevgilisi Aigisthos tarafından banyoda baltayla katledilmiştir."
+            },
+            menelaos: {
+                title: "Menelaos // Sparta Kralı ve Helen'in Eşi",
+                sub: "Epik Kahramanlar / Atreus Hanedanı",
+                story: "Agamemnon'un kardeşi. Paris, karısı Helen'i kaçırınca Akha krallarını yemine çağırarak Troya Savaşı'nın asıl gerekçesini oluşturmuştur. Paris ile teke tek düello yapmış ve savaştan sonra Helen'i geri almıştır."
+            },
+            patroklos: {
+                title: "Patroklos // Akhilleus'un Sadık Yoldaşı",
+                sub: "Epik Kahramanlar",
+                story: "Akhilleus savaşı bırakınca Akhaları kurtarmak için Aşil'in delinmez zırhını giyerek Troyalıları püskürtmüş, ancak Apollon'un sersemletmesiyle Truva Prensi Hektor tarafından katledilmiştir. Ölümü Aşil'i savaşa döndürmüştür."
+            },
+            hektor: {
+                title: "Hektor // Troya Duvarı Onurlu Prens",
+                sub: "Epik Kahramanlar / Troya Savunucusu",
+                story: "Kral Priamos'un büyük oğlu, Troya'nın en cesur komutanı. Patroklos'u öldürdükten sonra deliren Akhilleus ile surların önünde teke tek dövüşmüş, trajik şekilde can vermiş ve cesedi Aşil'in arabasında sürüklenmiştir."
+            },
+            orestes: {
+
+                title: "Orestes // Babasının Öcünü Alan Sürgün Evlat",
+                sub: "Epik Kahramanlar / Atreus Hanedanı",
+                story: "Agamemnon'un oğludur. Babasını katleden annesi Klytaimnestra ve Aigisthos'u öldürerek aile namusunu temizlemiş, öz anne kanı döktüğü için intikam tanrıçaları Erinyslerin (Furiler) korkunç delilik lanetine uğramıştır."
+            },
+
+            // --- ANTİ-KAHRAMANLAR ---
+            sisyphos: {
+                title: "Sisyphos // Ölümü Zincire Vuran Korint Kralı",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "Tanrıları defalarca aldatan ve ölüm tanrısı Thanatos'u zincire vuran Korint Kralı. Cezası, devasa bir kayayı ebediyen bir dağın zirvesine taşımaktır; kaya her seferinde aşağı yuvarlanır."
+            },
+            tantalos: {
+                title: "Tantalos // Tanrıların Sofrasındaki Kibirli Katil",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "Öz oğlu Pelops'u öldürüp tanrılara yemek diye sunan Sipylos kralı. Yeraltı dünyasında çenesine kadar su ve tepesinde nefis meyveler içinde ebedi açlık ve susuzluğa mahkum edilmiştir."
+            },
+            ikarus: {
+                title: "İkarus // Güneşe Çok Yakın Uçan Kibirli Genç",
+                sub: "Anti-Kahramanlar & Cezalılar",
+
+                story: "Babası Daidalos'un balmumu kanatlarıyla kaçarken kibrine yenilerek güneşe fazla yaklaşmış, eriyen kanatları yüzünden Ege Denizi'ne düşerek trajik şekilde can vermiştir."
+            },
+            arachne: {
+                title: "Arakne // Örümcek Ağlarına Mahkum Edilen Kibir",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "Dokuma yeteneğiyle Athena'ya meydan okuyan Lidya'lı kız. Yarışmada kusursuz bir kumaş dokusa da tanrıları aşağıladığı için Athena tarafından sonsuza dek ağ örecek bir örümceğe dönüştürülmüştür."
+            },
+            prometheus: {
+                title: "Prometheus // İnsanlık İçin Kendini Feda Eden Titan",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "Olimpos'tan kutsal ateşi çalıp insanlara hediye eden Titan. Zeus tarafından Kafkas Dağları'na zincirlenmiş, her gün bir kartal ciğerini yemiş, ciğeri her gece yeniden büyümüştür."
+            },
+            midas: {
+                title: "Kral Midas // Altın Dokunuşun ve Eşek Kulaklarının Laneti",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "Dokunduğu her şeyi altına çeviren hırslı kral. Sonrasında Apollon ile Pan arasındaki müzik yarışmasında Pan'ı seçince kulakları Apollon tarafından eşek kulağına dönüştürülmüştür."
+            },
+            niobe: {
+                title: "Niobe // Kayaya Dönüşen Mağrur Ananın Yası",
+
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "14 çocuğuyla tanrıça Leto'ya kibirle meydan okuyan Teb kraliçesi. Apollon ve Artemis tüm evlatlarını okla vurunca acıdan Sipylos Dağı'nda (Manisa) 'Ağlayan Kaya'ya dönüşmüştür."
+            },
+            phaethon: {
+                title: "Faeton // Gökyüzünü Ateşe Veren Güneş Arabası",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "Helios'un oğlu. Babasının Güneş Arabası'nı kaçırmış ancak atları zapt edemeyerek gökyüzünü ve Sahra'yı yakmıştır. Evrenin yanmasını önlemek için Zeus tarafından yıldırımla vurulmuştur."
+            },
+            narkissos: {
+                title: "Narkissos // Kendi Güzelliğinde Eriyen Ölüm",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "Su pınarında kendi yansımasını görüp aşık olan bencil genç. Karşılıksız aşkı yüzünden pınar başında eriyerek can vermiş, öldüğü yerde nergis (Narcissus) çiçeği biter olmuştur."
+            },
+            pandora: {
+                title: "Pandora // Merakın Dünyaya Saldığı Kötülük Kutusu",
+                sub: "Anti-Kahramanlar & Cezalılar",
+                story: "İlk ölümlü kadın. Kendisine verilen kapalı kutuyu merakına yenik düşerek açmış; dünyaya hastalık, keder ve ölümü salmıştır. Kutunun dibinde ise sadece 'Umut' kalmıştır."
+            },
+            oidipus: {
+
+                title: "Oidipus // Kader Ağlarına Düşen Teb Kralı",
+                sub: "Anti-Kahramanlar & Cezalılar / Labdakos Hanedanı",
+                story: "Delphi kehanetinden kaçmaya çalışırken hiç tanımadığı öz babası Laios'u yolda katleden, Teb şehrini Sphinx'in bilmecesini çözerek kurtarıp ödül olarak öz annesi İokaste ile evlenen trajik anti-kahraman kral. Gerçeği öğrendiğinde gözlerini kör etmiştir."
+            },
+            paris: {
+                title: "Paris // Troya Savaşını Başlatan Korkak Prens",
+                sub: "Anti-Kahramanlar / Troya Prensleri",
+                story: "Afrodit'in altın elma karşılığı vadettiği Helen'i kaçırarak koca bir uygarlığın yok olmasına yol açan, savaş alanlarında korkaklığıyla bilinen, en sonunda Akhilleus'u topuğundan okla vuran trajik figür."
+            },
+            atreus_thyestes: {
+                title: "Atreus ve Thyestes // Lanetli Tahtın Vahşi Kardeşleri",
+                sub: "Anti-Kahramanlar / Atreus Hanedanı",
+                story: "Miken tahtı için savaşan kardeşler. Atreus intikam için Thyestes'in öz çocuklarını gizlice öldürüp ziyafet sofrasında kardeşine yedirmiş; bu korkunç günah hanedana ebedi soy cinayeti laneti getirmiştir."
+            },
+            clytemnestra_aegisthus: {
+                title: "Klytaimnestra & Aigisthos // Banyodaki Baltalı Katiller",
+                sub: "Anti-Kahramanlar / Atreus Hanedanı",
+                story: "Agamemnon savaştayken krallığı ele geçiren ikili. Kızının kurban edilmesinin intikamını almak isteyen kraliçe Klytaimnestra, sevgilisi Aigisthos ile birleşerek Agamemnon'u banyoda ağ serip baltayla öldürmüştür."
+            },
+
+            eteokles_polyneikes: {
+                title: "Eteokles & Polyneikes // Birbirini Katleden Lanetli Kardeşler",
+                sub: "Anti-Kahramanlar / Labdakos Hanedanı",
+                story: "Oidipus'un oğulları. Teb krallığını sırayla yönetmek üzere anlaşmışlar ancak Eteokles süresi bitince tahtı devretmemiştir. Polyneikes ordu toplayıp şehre saldırmış, iki kardeş kapıda düelloda birbirini öldürmüştür."
+            },
+
+            // --- SOY AĞAÇLARI DETAYLARI ---
+            theseus_soy: { title: "Atina Hanedanı // Theseus'un Çift Babalı Kutsal Soyu", sub: "Soy Ağaçları & Kan Hatları", story: "Theseus'un soy hattı antik Atina'nın meşruiyetidir. Detaylar ve kılıç/sandalet kayası hikayesi kütüphanede sabittir." },
+            akhilleus_soy: { title: "Aiakos Hanedanı // Akhilleus'un Ölümsüzlük ve Savaşçı Çizgisi", sub: "Soy Ağaçları & Kan Hatları", story: "Peleus ile deniz nymhası Thetis'in evliliğinden doğan Akhilleus'un efsanevi topuk ve Myrmidon ordusu soy detayları." },
+            agamemnon_soy: { title: "Atreus Hanedanı // Kanla Beslenen Lanetli Sarayın Soyu", sub: "Soy Ağaçları & Kan Hatları", story: "Tantalos'tan Agamemnon ve Orestes'e uzanan, aile içi yamyamlık ve cinayetlerle sarmalanmış ulu Miken soy hattı." },
+            oidipus_soy: { title: "Labdakos Hanedanı // Kader ağlarıyla Örülü Teb Trajedisi", sub: "Soy Ağaçları & Kan Hatları", story: "Kadmos'un kurduğu Teb şehrinde Laios, İokaste ve Oidipus hiyerarşisinde kaçınılamayan kehanetlerin tam şeması." }
+        };
+
+        function openMythModal(key) {
+            const data = mythData[key];
+            if (!data) return;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-subtitle').innerText = data.sub;
+            document.getElementById('modal-body-content').innerHTML = `<p class="leading-relaxed text-stone-700 dark:text-stone-300">${data.story}</p>`;
+
+            const modal = document.getElementById('myth-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 15);
+        }
+
+        const mythModal = document.getElementById('myth-modal');
+        const closeBtn1 = document.getElementById('close-myth-modal');
+        const closeBtn2 = document.getElementById('close-myth-modal-btn');
+
+        const closeModalFunc = () => {
+            mythModal.querySelector('div').classList.remove('scale-100');
+            mythModal.querySelector('div').classList.add('scale-95');
+            mythModal.classList.add('opacity-0');
+            setTimeout(() => { mythModal.classList.add('hidden'); }, 200);
+        };
+
+
+        closeBtn1.addEventListener('click', closeModalFunc);
+        closeBtn2.addEventListener('click', closeModalFunc);
+        mythModal.addEventListener('click', (e) => { if (e.target === mythModal) closeModalFunc(); });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        });
+
+
+        // Theme Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-toggle-sun');
+        const moonIcon = document.getElementById('theme-toggle-moon');
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            sunIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            moonIcon.classList.remove('hidden');
+        }
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+
+                localStorage.setItem('color-theme', 'dark');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
